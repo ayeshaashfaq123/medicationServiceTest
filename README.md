@@ -7,3 +7,7 @@ Step 2 - Use Git Bash to execute Git Clone command to download the project in Vi
 Step 3 - Launch the serive on Visual Studio 2022 
 Step 4 - Once you have opened the project in VS 2022 , please go head and build the service to ensure no error is there.
 Step 5 - Run the serive using IISExpress and it should open the page. 
+
+Add Migration and Update Database 
+1- dotnet ef migrations add InitialCreate
+2- dotnet ef database update
