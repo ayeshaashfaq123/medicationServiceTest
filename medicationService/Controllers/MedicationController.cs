@@ -107,7 +107,7 @@ namespace medicationService.Controllers
 
                 if( endDate == null && frequency == null && status == null)
                 {
-                    return BadRequestError(responseMessages, "Values cannot be Null");
+                    return await BadRequestError(responseMessages, "Values cannot be Null");
                 }
 
                 responseMessages = await _medicationService.PatchData(endDate, frequency, status).ConfigureAwait(false);

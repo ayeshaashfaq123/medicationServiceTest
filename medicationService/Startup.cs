@@ -5,10 +5,12 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using static medicationService.Data.MedicationServiceConnection;
 
 namespace medicationService
 {
@@ -26,6 +28,10 @@ namespace medicationService
         {
             //Initiating the services - to run the service
             services.AddTransient<IMedicationService, MedicationService>();
+            // Add database context with PostgreSQL
+            // Inject connection of the database 
+            services.AddDbContext<AppDbContext>(options =>
+                options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
             services.AddControllers();
         }
 
