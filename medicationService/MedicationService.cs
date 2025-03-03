@@ -11,6 +11,7 @@ namespace medicationService
         {
             HttpResponseMessage httpResponseMessage = new HttpResponseMessage();
 
+            //We are going to be callling GetAsync methods in our Get endpoints to fetch the requested data. 
             httpResponseMessage.StatusCode = System.Net.HttpStatusCode.OK;
             return httpResponseMessage;
         }
@@ -24,6 +25,11 @@ namespace medicationService
             {
                 httpResponseMessage.StatusCode = System.Net.HttpStatusCode.OK;
             }
+
+            //Once the validation check is completed and required fields are present 
+            // In a developement environment, where we have database such as  DynamoDB operations are backed up 
+            // we will be calling CreateAsync methods in a repository, which call the dynamoDB table 
+            //mentioned in appsettings of the service to create that particular data in . 
             return httpResponseMessage;
         }
 

@@ -110,8 +110,6 @@ namespace medicationService.Controllers
                     return BadRequestError(responseMessages, "Values cannot be Null");
                 }
 
-               
-
                 responseMessages = await _medicationService.PatchData(endDate, frequency, status).ConfigureAwait(false);
 
                 return responseMessages.StatusCode switch

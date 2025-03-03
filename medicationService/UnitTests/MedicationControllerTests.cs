@@ -27,7 +27,6 @@ namespace medicationService.UnitTests
                 Frequency = "2",
                 Status = MedicationStatus.active
             };
-            medicationService.Setup<>
 
     
         }
