@@ -27,6 +27,11 @@ namespace medicationService.Controllers
         private readonly ILogger<MedicationController> _logger;
         private readonly IMedicationService _medicationService;
 
+        public MedicationController(IMedicationService medicationService)
+        {
+            _medicationService = medicationService;
+        }
+
         [HttpPost("postMedicationData", Name = "postMedicationData")]
         public async Task<IActionResult> PostMedication([FromBody] MedicationRequest medicationRequest)
         {
@@ -67,7 +72,7 @@ namespace medicationService.Controllers
         // FromHeader takes the authorization which is passed in ModHeader to execute the endpoint.
 
         //[FromHeader(Name = HeaderKeys.Authorization)] 
-        public async Task<IActionResult> GetHeritageData( [FromQuery] MedicationStatus medicationStatus, DateTime prescribedDate)
+        public async Task<IActionResult> GetMedicationData( [FromQuery] MedicationStatus medicationStatus, DateTime prescribedDate)
         {
             try
             {
@@ -134,24 +139,24 @@ namespace medicationService.Controllers
             var errorMessage = $"Error from Microservice {message}. Service responded status code" + responseMessage.StatusCode;
             _logger.LogError(errorMessage, new EventId(999999, "Server error"), null, "Error from USM/SCM Microservice");
 
-            ErrorResponse error = new ErrorResponse
+            ErrorResponseModel error = new ErrorResponseModel
             {
-                Message = message,
-                Code = "Exception"
+                ErrorMessage = message,
+                ErrorType = "Exception"
             };
             return StatusCode((int)HttpStatusCode.InternalServerError, error);
         }
 
         private async Task<IActionResult> NotFoundError(HttpResponseMessage responseMessage, string errorMessage)
         {
-            ErrorResponse errorResponse = new ErrorResponse()
+            ErrorResponseModel errorResponse = new ErrorResponseModel()
             {
-                Message = errorMessage,
-                Code = "Exception"
+                ErrorMessage = errorMessage,
+                ErrorType = "Exception"
             };
 
             var formatter = new JsonMediaTypeFormatter();
-            responseMessage.Content = new ObjectContent<ErrorResponse>(errorResponse, formatter, "application/json");
+            responseMessage.Content = new ObjectContent<ErrorResponseModel>(errorResponse, formatter, "application/json");
             return StatusCode((int)HttpStatusCode.NotFound, errorResponse);
         }
 
