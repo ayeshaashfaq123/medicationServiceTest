@@ -30,20 +30,22 @@ namespace medicationService
         public void ConfigureServices(IServiceCollection services)
         {
             //Initiating the services - to run the service
+            //creating a new transit service to use when it is requested.
             services.AddTransient<IMedicationService, MedicationService>();
             // Add database context with PostgreSQL
             // Inject connection of the database 
             services.AddDbContext<AppDbContext>(options =>
                 options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
             
-
+            //injects the API version in which the application is capable to run on 
             services.AddApiVersioning(options =>
             {
-                options.DefaultApiVersion = new ApiVersion(1, 0);
+                options.DefaultApiVersion = new Microsoft.AspNetCore.Mvc.ApiVersion(1, 0);
                 options.AssumeDefaultVersionWhenUnspecified = true;
                 options.ReportApiVersions = true;
             });
 
+            //inject swagger to be opened. and generating swagger documents for the APIS written in the service.
             services.AddSwaggerGen(options =>
             {
                 options.SwaggerDoc("v1", new OpenApiInfo { Title = "MedicationService V1 Version", Version = "v1" });
@@ -63,10 +65,14 @@ namespace medicationService
             {
                 app.UseDeveloperExceptionPage();
                 app.UseStaticFiles();
-                app.UseSwagger();
+                app.UseSwagger(); //allows swagger to be used while application is running. 
                 app.UseSwaggerUI(c =>
                 {
-                    c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+                    //this line of code states the url for an swagger/openAPI application.
+                    //the more swagger version, they can be added . 
+                    //for example - SwaggerRoutes.Add(new SwaggerUi3Route("v1", "/swagger/v1/swagger.json"));
+                    c.SwaggerEndpoint("/swagger/v1/swagger.json", "My Microservice");
+                    c.RoutePrefix = string.Empty;
                 });
             }
 
