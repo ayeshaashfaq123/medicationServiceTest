@@ -11,3 +11,7 @@ Step 5 - Run the serive using IISExpress and it should open the page.
 Add Migration and Update Database 
 1- dotnet ef migrations add InitialCreate
 2- dotnet ef database update
+
+In order to run the service 
+Please use this link to view the swagger page - http://localhost:17678/swagger/index.html 
+![image](https://github.com/user-attachments/assets/44f3f6d5-ae0f-4ed2-90ad-296a5c64b6a6)
