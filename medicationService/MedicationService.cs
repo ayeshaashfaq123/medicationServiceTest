@@ -12,10 +12,6 @@ namespace medicationService
     {
         private readonly ILogger<MedicationController> _logger;
 
-        public MedicationService(ILogger<MedicationService> logger)
-        {
-            //_logger = new 
-        }
         public async Task<HttpResponseMessage> GetMedicationData(MedicationStatus medicationStatus, DateTime prescribedDate)
         {
             HttpResponseMessage httpResponseMessage = new HttpResponseMessage();
@@ -25,9 +21,6 @@ namespace medicationService
                 //We are going to be callling GetAsync methods in our Get endpoints to fetch the requested data.
                 //perform dynamo operations
             }
-
-
-
             httpResponseMessage.StatusCode = System.Net.HttpStatusCode.OK;
             return httpResponseMessage;
         }
