@@ -37,21 +37,12 @@ namespace medicationService
                 options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
             services.AddControllers();
 
-            services.AddApiVersioning(options =>
-            {
-                options.DefaultApiVersion = new ApiVersion(1, 0);
-                options.AssumeDefaultVersionWhenUnspecified = true;
-                options.ReportApiVersions = true;
-            });
 
-            services.AddSwaggerGen(options =>
-            {
-                options.SwaggerDoc("v1", new OpenApiInfo { Title = "Your API", Version = "v1" });
+            services.AddMvc();
 
-                // Add support for XML comments
-                var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
-                var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
-                options.IncludeXmlComments(xmlPath);
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "My API", Version = "v1" });
             });
         }
 
@@ -62,14 +53,12 @@ namespace medicationService
             {
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
-                app.UseSwaggerUI(options =>
+                app.UseSwaggerUI(c =>
                 {
-                    options.SwaggerEndpoint("/swagger/v1/swagger.json", "MedicationService V1 Version");
-                    options.RoutePrefix = string.Empty; // Set the Swagger UI at the root URL
+                    c.SwaggerEndpoint("v1/swagger.json", "My Api v1");
                 });
 
             }
-
             app.UseRouting();
 
             app.UseAuthorization();
